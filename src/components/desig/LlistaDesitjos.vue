@@ -1,6 +1,6 @@
 z
 <script setup lang="ts">
-import { ESTAT_ACTIU, ESTAT_DESACTIVAT } from '@/constants'
+import { ESTAT_ACTIU, ESTAT_DESACTIVAT, ESTAT_ESTRELLA } from '@/constants'
 import type Desig from '@/interfaces/Desig'
 import { computed, ref, type Ref } from 'vue'
 
@@ -14,7 +14,7 @@ const llista: Ref<Desig[]> = ref([
   {
     id: 2,
     nom: 'Anar a la muntanya',
-    estat: ESTAT_DESACTIVAT
+    estat: ESTAT_ESTRELLA
   },
   {
     id: 3,
@@ -48,6 +48,10 @@ const deLaMar = actius.value.filter((desig: Desig) => desig.nom.includes('mar'))
 
 const columnes: string[] = Object.keys(llista.value?.[0] ?? [])
 
+const desigEstrella: Desig | undefined = llista.value.find(
+  (desig: Desig) => desig.estat === ESTAT_ESTRELLA
+)
+
 const classesDeLaFila = (index: number) => {
   // esParell?
   if (index % 2 === 0) {
@@ -63,6 +67,10 @@ const classesDeLaFila = (index: number) => {
       <h5>Llista de desitjos</h5>
     </div>
     <div class="card-body">
+      <div v-if="desigEstrella" class="alert alert-success display-3">
+        El teu desig estrella: {{ desigEstrella.nom }}
+      </div>
+
       <ul>
         <li v-for="(desitj, index) in actius" :key="index">{{ desitj.id }}: {{ desitj.nom }}</li>
       </ul>
