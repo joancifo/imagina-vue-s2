@@ -1,4 +1,4 @@
-export default class Desitj {
+export default class Desig {
   id: number
   nom: string
 

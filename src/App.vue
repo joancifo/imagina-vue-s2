@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch, watchEffect, type Ref } from 'vue'
 import UserForm from '@/interfaces/UserForm'
-import type Desitj from './interfaces/Desitj'
+import type Desig from './interfaces/Desig'
 
 const nomDeUsuari = ref<string>('Joan ref')
 
@@ -43,7 +43,7 @@ const etsEnJoan: Ref<boolean> = computed(() => nomDeUsuari.value === 'Joan')
 const etsEnMiquel: Ref<boolean> = computed(() => nomDeUsuari.value === 'Miquel')
 
 // const llistaDeDesitjos: string[] = ['Anar a la platja', 'Anar a la muntanya']
-const llistaDeDesitjos: Desitj[] = [
+const llistaDeDesitjos: Desig[] = [
   {
     id: 1,
     nom: 'Anar la platja'
@@ -56,8 +56,8 @@ const llistaDeDesitjos: Desitj[] = [
 
 const columnes: string[] = Object.keys(llistaDeDesitjos?.[0] ?? [])
 
-const desitjU: Desitj = llistaDeDesitjos[0]
-console.log(desitjU.nom, desitjU['nom'], desitjU[columnes[1]])
+const desigU: Desig = llistaDeDesitjos[0]
+console.log(desigU.nom, desigU['nom'], desigU[columnes[1]])
 </script>
 
 <template>
@@ -104,9 +104,9 @@ console.log(desitjU.nom, desitjU['nom'], desitjU[columnes[1]])
               </tr>
             </thead>
             <tbody>
-              <tr v-for="desitj in llistaDeDesitjos" :key="desitj.id">
+              <tr v-for="desig in llistaDeDesitjos" :key="desig.id">
                 <td v-for="(columna, index) in columnes" :key="index">
-                  {{ desitj[columna] }}
+                  {{ desig[columna] }}
                 </td>
               </tr>
             </tbody>
