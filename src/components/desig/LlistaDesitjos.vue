@@ -114,7 +114,7 @@ const afegirDesig = () => {
       <div class="card-body mt-5">
         <form @submit.prevent="afegirDesig">
           <div class="my-3">
-            <InputText v-model="nouDesig" text-ajuda="Què desitges ara mateix?" type="email" />
+            <InputText v-model="nouDesig" text-ajuda="Què desitges ara mateix?" type="text" />
           </div>
           <button class="btn btn-primary" type="submit">Afegir desig!</button>
         </form>

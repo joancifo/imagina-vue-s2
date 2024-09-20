@@ -18,5 +18,6 @@ const input = defineModel()
 </script>
 
 <template>
+  <!-- <input v-model.trim="input" class="form-control" :placeholder="textAjuda" :type="type" /> -->
   <input v-model="input" class="form-control" :placeholder="textAjuda" :type="type" />
 </template>

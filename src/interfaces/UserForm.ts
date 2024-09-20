@@ -1,11 +1,13 @@
 export default class UserForm {
-  public nom: string
-  public edat?: number
-  public cognoms?: string[]
+  nom: string
+  edat?: number
+  cognoms?: string[]
+  sobretu?: string
+  acceptarCondicions?: boolean
+  estat?: number
+  estudis?: number
 
-  constructor(nom: string, edat?: number, cognoms?: string[]) {
+  constructor(nom: string) {
     this.nom = nom
-    this.edat = edat
-    this.cognoms = cognoms
   }
 }
