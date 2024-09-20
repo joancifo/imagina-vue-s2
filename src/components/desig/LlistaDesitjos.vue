@@ -1,52 +1,35 @@
 z
 <script setup lang="ts">
-import { ESTAT_ACTIU, ESTAT_DESACTIVAT, ESTAT_ESTRELLA } from '@/constants'
+import { ESTAT_ACTIU, ESTAT_ESTRELLA } from '@/constants'
 import type Desig from '@/interfaces/Desig'
-import { computed, ref, type Ref } from 'vue'
+import { computed, defineProps, type Ref } from 'vue'
 
-// const llista: string[] = ['Anar a la platja', 'Anar a la muntanya']
-const llista: Ref<Desig[]> = ref([
-  {
-    id: 1,
-    nom: 'Anar la platja',
-    estat: ESTAT_ACTIU
+// const props = defineProps(['llista', 'esDeLaMar'])
+const props: any = defineProps({
+  llista: {
+    required: true
   },
-  {
-    id: 2,
-    nom: 'Anar a la muntanya',
-    estat: ESTAT_ESTRELLA
-  },
-  {
-    id: 3,
-    nom: 'Anar a la mar',
-    estat: ESTAT_ACTIU
-  },
-  {
-    id: 4,
-    nom: 'Anar a passejar',
-    estat: ESTAT_ACTIU
-  },
-  {
-    id: 5,
-    nom: 'Mirar la mar',
-    estat: ESTAT_ACTIU
-  },
-  {
-    id: 6,
-    nom: 'No tenc cap més desig',
-    estat: ESTAT_DESACTIVAT
-  }
-])
-
-llista.value = llista.value.map((desig: Desig): Desig => {
-  // desig.nom = desig.nom.toUpperCase()
-
-  // return desig
-  return {
-    ...desig,
-    nom: desig.nom.toUpperCase()
+  esDeLaMar: {
+    default: false
   }
 })
+
+// const props: any = defineProps<{
+//   llista: Desig[]
+//   esDeLaMar?: boolean
+// }>()
+
+const llista = computed(() =>
+  props.llista.map((desig: Desig): Desig => {
+    // desig.nom = desig.nom.toUpperCase()
+
+    // return desig
+    return {
+      ...desig,
+      nom: desig.nom.toUpperCase()
+    }
+  })
+)
 
 const actius: Ref<Desig[]> = computed(() =>
   llista.value.filter((desig: Desig): boolean => desig.estat === ESTAT_ACTIU)
@@ -103,7 +86,7 @@ const classesDeLaFila = (index: number) => {
         </tbody>
       </table>
     </div>
-    <div class="card-body">
+    <div v-if="esDeLaMar" class="card-body">
       <div>
         <h5>Els desitjos de la mar:</h5>
         <div class="d-flex justify-content-between">
