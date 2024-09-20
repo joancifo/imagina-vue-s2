@@ -3,6 +3,7 @@ import { inject } from 'vue'
 
 defineProps<{
   textAjuda: string
+  type?: string
 }>()
 
 const input = defineModel()
@@ -19,6 +20,5 @@ const myList: any = inject('laLlistaCompleta')
 </script>
 
 <template>
-  {{ myList.length }}
-  <input v-model="input" type="text" class="form-control" :placeholder="textAjuda" />
+  <input v-model="input" class="form-control" :placeholder="textAjuda" :type="type" />
 </template>
