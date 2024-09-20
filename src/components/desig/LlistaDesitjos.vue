@@ -65,9 +65,11 @@ const afegirDesig = () => {
 </script>
 <template>
   <div class="card">
-    <div class="card-header">
-      <h5>Llista de desitjos</h5>
-    </div>
+    <slot name="header" :llista="llista">
+      <div class="card-header">
+        <h5>Llista de desitjos</h5>
+      </div>
+    </slot>
     <div class="card-body">
       <div v-if="desigEstrella" class="alert alert-success display-3">
         El teu desig estrella: {{ desigEstrella.nom }}
@@ -105,13 +107,18 @@ const afegirDesig = () => {
         </div>
       </div>
     </div>
-    <div class="card-body mt-5">
-      <form @submit.prevent="afegirDesig">
-        <div class="my-3">
-          <InputText v-model="nouDesig" text-ajuda="Què desitges ara mateix?" />
-        </div>
-        <button class="btn btn-primary" type="submit">Afegir desig!</button>
-      </form>
-    </div>
+
+    <slot />
+
+    <slot name="formulari">
+      <div class="card-body mt-5">
+        <form @submit.prevent="afegirDesig">
+          <div class="my-3">
+            <InputText v-model="nouDesig" text-ajuda="Què desitges ara mateix?" />
+          </div>
+          <button class="btn btn-primary" type="submit">Afegir desig!</button>
+        </form>
+      </div>
+    </slot>
   </div>
 </template>

@@ -80,6 +80,8 @@ const afegirDesig = (nom: string) => {
     estat: ESTAT_ACTIU
   })
 }
+
+// provide('laLlistaCompleta', llista)
 </script>
 
 <template>
@@ -97,9 +99,21 @@ const afegirDesig = (nom: string) => {
           :llista="desitjosDeLaMar"
           :esDeLaMar="true"
           @nouDesig="afegirDesig"
-        />
+        >
+          <template #header="{ llista }">
+            <div class="card-header">
+              <h1>Desitjos importants {{ llista.length }}</h1>
+            </div>
+          </template>
+        </LlistaDesitjos>
 
-        <LlistaDesitjos class="mt-5" :llista="desitjosDeLaPlatja" @nouDesig="afegirDesig" />
+        <LlistaDesitjos class="mt-5" :llista="desitjosDeLaPlatja" @nouDesig="afegirDesig">
+          <template #header>
+            <h1>Soc un header més lleig</h1>
+          </template>
+
+          <div>Estic a l'slot?</div>
+        </LlistaDesitjos>
 
         <LlistaAtributs class="mt-5" />
       </div>
