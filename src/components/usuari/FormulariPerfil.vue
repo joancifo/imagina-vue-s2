@@ -3,6 +3,8 @@ import { computed, onMounted, reactive, ref, watch, watchEffect, type Ref } from
 
 import UserForm from '@/interfaces/UserForm'
 import { ESTAT_ACTIU, ESTAT_DESACTIVAT } from '@/constants'
+import { ErrorMessage, Field, Form } from 'vee-validate'
+import * as yup from 'yup'
 
 const nomDeUsuari = ref<string>('Joan ref')
 
@@ -47,12 +49,17 @@ const actualitzaPerfil = () => {
   })
 }
 
+const schema = yup.object({
+  nomDeUsuari: yup.string().required().min(3).max(10),
+  acceptarCondicions: yup.bool().required().isTrue("Has d'acceptar les condicions")
+})
+
 onMounted(() => {
   setInterval(actualitzaPerfil, 30 * 1000)
 })
 </script>
 <template>
-  <form @submit.prevent="actualitzaPerfil" class="card">
+  <Form @submit="actualitzaPerfil" :validation-schema="schema" class="card">
     <div class="card-header">
       <h5>Hola, {{ nomDeUsuari }} o bé {{ form.nom }}</h5>
     </div>
@@ -61,8 +68,11 @@ onMounted(() => {
       <div>
         <label>
           Ref:
-          <input type="text" v-model="nomDeUsuari" class="form-control" />
+          <Field v-model="nomDeUsuari" name="nomDeUsuari" class="form-control" />
         </label>
+        <div>
+          <ErrorMessage name="nomDeUsuari" />
+        </div>
       </div>
       <div>
         <label>
@@ -73,9 +83,18 @@ onMounted(() => {
       <div class="d-flex flex-column gap-4 mt-4">
         <div>
           <label>
-            <input type="checkbox" v-model="form.acceptarCondicions" />
+            <Field
+              name="acceptarCondicions"
+              type="checkbox"
+              v-model="form.acceptarCondicions"
+              :value="true"
+              :unchecked-value="false"
+            />
             Accept les condicions
           </label>
+          <div>
+            <ErrorMessage name="acceptarCondicions" />
+          </div>
         </div>
         <div class="d-flex gap-4">
           <label><input type="radio" v-model="form.estat" :value="ESTAT_ACTIU" />Actiu</label>
@@ -103,5 +122,5 @@ onMounted(() => {
     <div class="card-body">
       <button type="submit" class="btn btn-primary">Enviar</button>
     </div>
-  </form>
+  </Form>
 </template>

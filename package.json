@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@vee-validate/yup": "^4.13.2",
     "bootstrap": "^5.3.3",
+    "vee-validate": "^4.13.2",
     "vue": "^3.4.29"
   },
   "devDependencies": {
