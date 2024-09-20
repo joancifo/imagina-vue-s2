@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { inject } from 'vue'
-
 defineProps<{
   textAjuda: string
   type?: string
@@ -8,7 +6,7 @@ defineProps<{
 
 const input = defineModel()
 
-const myList: any = inject('laLlistaCompleta')
+// const myList: any = inject('laLlistaCompleta')
 
 // onMounted(() => {
 //   myList.value.push({
