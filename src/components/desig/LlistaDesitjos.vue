@@ -3,6 +3,7 @@ z
 import { ESTAT_ACTIU, ESTAT_ESTRELLA } from '@/constants'
 import type Desig from '@/interfaces/Desig'
 import { computed, defineProps, ref, type Ref } from 'vue'
+import InputText from '../form/InputText.vue'
 
 // const props = defineProps(['llista', 'esDeLaMar'])
 const props: any = defineProps({
@@ -57,6 +58,11 @@ const classesDeLaFila = (index: number) => {
 }
 
 const nouDesig = ref<string>('')
+
+const valorCanviat = (nouValor: string) => {
+  nouDesig.value = nouValor
+}
+
 const afegirDesig = () => {
   emit('nouDesig', nouDesig.value)
   nouDesig.value = ''
@@ -107,7 +113,7 @@ const afegirDesig = () => {
     <div class="card mt-5">
       <form @submit.prevent="afegirDesig">
         <div>
-          <input v-model="nouDesig" type="text" class="form-control" placeholder="Què desiges?" />
+          <InputText text-ajuda="Què desitges ara mateix?" @canviInput="valorCanviat" />
         </div>
         <button class="btn btn-primary" type="submit">Afegir desig!</button>
       </form>
