@@ -58,11 +58,6 @@ const classesDeLaFila = (index: number) => {
 }
 
 const nouDesig = ref<string>('')
-
-const valorCanviat = (nouValor: string) => {
-  nouDesig.value = nouValor
-}
-
 const afegirDesig = () => {
   emit('nouDesig', nouDesig.value)
   nouDesig.value = ''
@@ -113,7 +108,7 @@ const afegirDesig = () => {
     <div class="card mt-5">
       <form @submit.prevent="afegirDesig">
         <div>
-          <InputText text-ajuda="Què desitges ara mateix?" @canviInput="valorCanviat" />
+          <InputText v-model="nouDesig" text-ajuda="Què desitges ara mateix?" />
         </div>
         <button class="btn btn-primary" type="submit">Afegir desig!</button>
       </form>

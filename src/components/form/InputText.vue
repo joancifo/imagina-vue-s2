@@ -1,17 +1,9 @@
 <script setup lang="ts">
-import { ref, watch, type Ref } from 'vue'
-
 defineProps<{
   textAjuda: string
 }>()
 
-const emit = defineEmits(['canviInput'])
-
-const input: Ref<string> = ref<string>('')
-
-watch(input, (nouValor) => {
-  emit('canviInput', nouValor)
-})
+const input = defineModel()
 </script>
 
 <template>
