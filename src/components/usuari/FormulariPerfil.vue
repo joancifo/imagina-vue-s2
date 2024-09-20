@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch, watchEffect, type Ref } from 'vue'
+import { computed, onMounted, reactive, ref, watch, watchEffect, type Ref } from 'vue'
 
 import UserForm from '@/interfaces/UserForm'
 import { ESTAT_ACTIU, ESTAT_DESACTIVAT } from '@/constants'
@@ -46,6 +46,10 @@ const actualitzaPerfil = () => {
     body: JSON.stringify(form)
   })
 }
+
+onMounted(() => {
+  setInterval(actualitzaPerfil, 30 * 1000)
+})
 </script>
 <template>
   <form @submit.prevent="actualitzaPerfil" class="card">
