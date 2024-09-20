@@ -2,7 +2,7 @@ z
 <script setup lang="ts">
 import { ESTAT_ACTIU, ESTAT_ESTRELLA } from '@/constants'
 import type Desig from '@/interfaces/Desig'
-import { computed, defineProps, type Ref } from 'vue'
+import { computed, defineProps, ref, type Ref } from 'vue'
 
 // const props = defineProps(['llista', 'esDeLaMar'])
 const props: any = defineProps({
@@ -13,6 +13,8 @@ const props: any = defineProps({
     default: false
   }
 })
+
+const emit = defineEmits(['nouDesig'])
 
 // const props: any = defineProps<{
 //   llista: Desig[]
@@ -52,6 +54,12 @@ const classesDeLaFila = (index: number) => {
   }
 
   return 'table-info'
+}
+
+const nouDesig = ref<string>('')
+const afegirDesig = () => {
+  emit('nouDesig', nouDesig.value)
+  nouDesig.value = ''
 }
 </script>
 <template>
@@ -95,6 +103,14 @@ const classesDeLaFila = (index: number) => {
           </div>
         </div>
       </div>
+    </div>
+    <div class="card mt-5">
+      <form @submit.prevent="afegirDesig">
+        <div>
+          <input v-model="nouDesig" type="text" class="form-control" placeholder="Què desiges?" />
+        </div>
+        <button class="btn btn-primary" type="submit">Afegir desig!</button>
+      </form>
     </div>
   </div>
 </template>

@@ -55,32 +55,30 @@ onMounted(() => {
   console.log(container.value)
 
   llista.value.push({
-    id: 999,
+    id: Math.random() * 1000,
     nom: "la mar m'agrada",
     estat: ESTAT_ACTIU
   })
 
   llista.value.push({
-    id: 999,
+    id: Math.random() * 1000,
     nom: "la mar m'agrada",
     estat: ESTAT_ACTIU
   })
 
   llista.value.push({
-    id: 999,
+    id: Math.random() * 1000,
     nom: "la mar m'agrada",
     estat: ESTAT_ACTIU
   })
 })
 
-const nouDesig = ref<string>('')
-const afegirDesig = () => {
+const afegirDesig = (nom: string) => {
   llista.value.push({
-    id: -1,
-    nom: nouDesig.value,
+    id: Math.random() * 1000,
+    nom,
     estat: ESTAT_ACTIU
   })
-  nouDesig.value = ''
 }
 </script>
 
@@ -94,25 +92,16 @@ const afegirDesig = () => {
 
         <FormulariPerfil />
 
-        <LlistaDesitjos class="mt-5" :llista="desitjosDeLaMar" :esDeLaMar="true" />
+        <LlistaDesitjos
+          class="mt-5"
+          :llista="desitjosDeLaMar"
+          :esDeLaMar="true"
+          @nouDesig="afegirDesig"
+        />
 
-        <LlistaDesitjos class="mt-5" :llista="desitjosDeLaPlatja" />
+        <LlistaDesitjos class="mt-5" :llista="desitjosDeLaPlatja" @nouDesig="afegirDesig" />
 
         <LlistaAtributs class="mt-5" />
-
-        <div class="card mt-5">
-          <form @submit.prevent="afegirDesig">
-            <div>
-              <input
-                v-model="nouDesig"
-                type="text"
-                class="form-control"
-                placeholder="Què desiges?"
-              />
-            </div>
-            <button class="btn btn-primary" type="submit">Afegir desig!</button>
-          </form>
-        </div>
       </div>
     </div>
   </div>
