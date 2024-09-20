@@ -2,7 +2,6 @@
 import { computed, reactive, ref, watch, watchEffect, type Ref } from 'vue'
 
 import UserForm from '@/interfaces/UserForm'
-import LlistaDesitjos from '../desig/LlistaDesitjos.vue'
 
 const nomDeUsuari = ref<string>('Joan ref')
 

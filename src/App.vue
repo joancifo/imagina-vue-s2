@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import FormulariPerfil from './components/usuari/FormulariPerfil.vue'
-import LlistaDesitjos from './components/desig/LlistaDesitjos.vue'
-import LlistaAtributs from './components/usuari/LlistaAtributs.vue'
+import FormulariPerfil from '@/components/usuari/FormulariPerfil.vue'
+import LlistaDesitjos from '@/components/desig/LlistaDesitjos.vue'
+import LlistaAtributs from '@/components/usuari/LlistaAtributs.vue'
 
 const container = ref()
 

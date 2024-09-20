@@ -38,11 +38,21 @@ const llista: Ref<Desig[]> = ref([
   }
 ])
 
+llista.value = llista.value.map((desig: Desig): Desig => {
+  // desig.nom = desig.nom.toUpperCase()
+
+  // return desig
+  return {
+    ...desig,
+    nom: desig.nom.toUpperCase()
+  }
+})
+
 const actius: Ref<Desig[]> = computed(() =>
-  llista.value.filter((desig: Desig) => desig.estat === ESTAT_ACTIU)
+  llista.value.filter((desig: Desig): boolean => desig.estat === ESTAT_ACTIU)
 )
 
-const deLaMar = actius.value.filter((desig: Desig) => desig.nom.includes('mar'))
+const deLaMar = actius.value.filter((desig: Desig) => desig.nom.includes('MAR'))
 
 // const actius = llista
 
