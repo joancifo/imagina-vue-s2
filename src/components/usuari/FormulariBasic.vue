@@ -60,13 +60,13 @@ const [telefon] = defineField('telefon')
     <div class="card-body d-flex flex-column gap-4" :class="classesAddicionals">
       <div>
         <label>
-          Ref:
+          {{ $t('perfil.nom') }}
           <input v-model="nomDeUsuari" name="nomDeUsuari" required class="form-control" />
         </label>
       </div>
       <div>
         <label>
-          Nivell d'estudis
+          {{ $t('perfil.estudis') }}
           <select v-model.number="nivellEstudis" class="form-control">
             <option value="1">Bàsics</option>
             <option value="2">Universitaris</option>

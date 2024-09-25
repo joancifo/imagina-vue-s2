@@ -3,10 +3,12 @@ import LlistaDesitjos from '@/components/desig/LlistaDesitjos.vue'
 import FormulariPerfil from '@/components/usuari/FormulariPerfil.vue'
 import FormulariBasic from '@/components/usuari/FormulariBasic.vue'
 import LlistaAtributs from '@/components/usuari/LlistaAtributs.vue'
-import { computed, onMounted, ref, type Ref } from 'vue'
+import { capitalize, computed, onMounted, ref, type Ref } from 'vue'
 import { ESTAT_ACTIU, ESTAT_DESACTIVAT, ESTAT_ESTRELLA } from './constants'
 import type Desig from './interfaces/Desig'
 import { useMouse } from './hooks/useMouse'
+import { useI18n } from 'vue-i18n'
+import { useFocus } from '@vueuse/core'
 
 // const llista: string[] = ['Anar a la platja', 'Anar a la muntanya']
 const llista: Ref<Desig[]> = ref([
@@ -86,11 +88,24 @@ const afegirDesig = (nom: string) => {
 }
 
 // provide('laLlistaCompleta', llista)
+
+const { locale } = useI18n()
+const { focused } = useFocus(container)
 </script>
 
 <template>
   <div ref="container" class="container">
-    {{ eixX }} {{ eixY }}
+    {{ eixX }} {{ eixY }} isFocused: {{ focused }}
+
+    <!-- {{ $hello('paraula!') }} -->
+
+    <div>
+      <select v-model="locale">
+        <option value="ca">{{ $t('locales.es') }}</option>
+        <option value="es">ES</option>
+      </select>
+    </div>
+
     <div class="row">
       <div class="col-12 d-flex flex-column gap-4">
         <FormulariBasic />
