@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 
-const nomDeUsuari = ref<string>('Joan ref')
+const nomDeUsuari: Ref<String> = ref<string>('Joan ref')
+const nivellEstudis: Ref<number> = ref<number>()
 
 const classesAddicionals = computed(() => {
     return {
@@ -24,11 +25,22 @@ const etsEnMiquel: Ref<boolean> = computed(() => nomDeUsuari.value === 'Miquel')
         <div class="card-header">
             <h5>Formulari bàsic - {{ nomDeUsuari }}</h5>
         </div>
-        <div class="card-body" :class="classesAddicionals">
+        <div class="card-body d-flex flex-column gap-4" :class="classesAddicionals">
             <div>
                 <label>
                     Ref:
                     <input v-model="nomDeUsuari" name="nomDeUsuari" class="form-control" />
+                </label>
+            </div>
+
+
+            <div>
+                <label>
+                    Nivell d'estudis
+                    <select v-model.number="nivellEstudis" class="form-control">
+                        <option value="1">Bàsics</option>
+                        <option value="2">Universitaris</option>
+                    </select>
                 </label>
             </div>
         </div>
