@@ -2,7 +2,7 @@ z
 <script setup lang="ts">
 import { ESTAT_ACTIU, ESTAT_ESTRELLA } from '@/constants'
 import type Desig from '@/interfaces/Desig'
-import { computed, defineProps, ref, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 import InputText from '../form/InputText.vue'
 
 // const props = defineProps(['llista', 'esDeLaMar'])
