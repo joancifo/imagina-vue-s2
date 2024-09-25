@@ -1,10 +1,20 @@
 <script setup lang="ts">
+import { useFormulari } from '@/hooks/useFormulari'
 import { useForm } from 'vee-validate'
 import { ref, computed, watch, type Ref } from 'vue'
 import * as yup from 'yup'
 
+const { enviant, textBoto, classBoto, enviar } = useFormulari()
+
+const enviarDades = () => {
+  enviar('/api/perfil', {
+    nomDeUsuari: nomDeUsuari.value,
+    nivellEstudis: nivellEstudis.value
+  })
+}
+
 const nomDeUsuari = ref<string>('Joan ref')
-const nivellEstudis = ref<number>()
+const nivellEstudis = ref<number | undefined>()
 
 const classesAddicionals = computed(() => {
   return {
@@ -29,17 +39,7 @@ const estaDeshabilitat: Ref<boolean> = computed((): boolean => {
   return false
 })
 
-const enviarDades = () => {
-  fetch('/api/perfil', {
-    method: 'POST',
-    body: JSON.stringify({
-      nomDeUsuari: nomDeUsuari.value,
-      nivellEstudis: nivellEstudis.value
-    })
-  })
-}
-
-const { values, defineField, handleSubmit, errors, meta } = useForm({
+const { values, defineField, errors, meta } = useForm({
   validationSchema: yup.object({
     email: yup.string().email()
   })
@@ -109,13 +109,12 @@ const [telefon] = defineField('telefon')
     </div>
 
     <div class="card-footer">
-      <button
-        type="submit"
-        :disabled="estaDeshabilitat"
-        class="btn"
-        :class="estaDeshabilitat ? 'btn-warning' : 'btn-primary'"
-      >
-        Enviar
+      <button type="submit" :disabled="estaDeshabilitat" class="btn" :class="classBoto">
+        {{ textBoto }}
+
+        <div v-if="enviant" class="spinner-border spinner-border-sm" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </button>
     </div>
   </form>
