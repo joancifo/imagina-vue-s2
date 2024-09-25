@@ -52,15 +52,11 @@ const desitjosDeLaPlatja: Ref<Desig[]> = computed(() =>
 
 const container = ref()
 
-const mouse = useMouse()
-
-// mouse.mostrar()
-
-console.log(mouse.eixX.value, mouse.eixY.value)
+const { eixX, eixY } = useMouse()
 
 onMounted(() => {
   // S'ha de fer dins onMounted!
-  console.log(container.value)
+  // console.log(container.value)
 
   llista.value.push({
     id: Math.random() * 1000,
@@ -94,6 +90,7 @@ const afegirDesig = (nom: string) => {
 
 <template>
   <div ref="container" class="container">
+    {{ eixX }} {{ eixY }}
     <div class="row">
       <div class="col-12 d-flex flex-column gap-4">
         <FormulariBasic />
