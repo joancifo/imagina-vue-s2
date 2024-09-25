@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import LlistaDesitjos from '@/components/desig/LlistaDesitjos.vue'
 import FormulariPerfil from '@/components/usuari/FormulariPerfil.vue'
+import FormulariBasic from '@/components/usuari/FormulariBasic.vue'
 import LlistaAtributs from '@/components/usuari/LlistaAtributs.vue'
 import { computed, onMounted, ref, type Ref } from 'vue'
 import { ESTAT_ACTIU, ESTAT_DESACTIVAT, ESTAT_ESTRELLA } from './constants'
@@ -87,19 +88,13 @@ const afegirDesig = (nom: string) => {
 <template>
   <div ref="container" class="container">
     <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header"></div>
-        </div>
+      <div class="col-12 d-flex flex-column gap-4">
+
+        <FormulariBasic />
 
         <FormulariPerfil />
 
-        <LlistaDesitjos
-          class="mt-5"
-          :llista="desitjosDeLaMar"
-          :esDeLaMar="true"
-          @nouDesig="afegirDesig"
-        >
+        <LlistaDesitjos :llista="desitjosDeLaMar" :esDeLaMar="true" @nouDesig="afegirDesig">
           <template #header="{ llista }">
             <div class="card-header">
               <h1>Desitjos importants {{ llista.length }}</h1>
@@ -107,7 +102,7 @@ const afegirDesig = (nom: string) => {
           </template>
         </LlistaDesitjos>
 
-        <LlistaDesitjos class="mt-5" :llista="desitjosDeLaPlatja" @nouDesig="afegirDesig">
+        <LlistaDesitjos :llista="desitjosDeLaPlatja" @nouDesig="afegirDesig">
           <template #header>
             <h1>Soc un header més lleig</h1>
           </template>
@@ -115,7 +110,7 @@ const afegirDesig = (nom: string) => {
           <div>Estic a l'slot?</div>
         </LlistaDesitjos>
 
-        <LlistaAtributs class="mt-5" />
+        <LlistaAtributs />
       </div>
     </div>
   </div>
