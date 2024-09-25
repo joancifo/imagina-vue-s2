@@ -3,6 +3,7 @@ import { onMounted, reactive, watch, watchEffect } from 'vue'
 import { ErrorMessage, Field, Form } from 'vee-validate'
 
 import { ESTAT_ACTIU, ESTAT_DESACTIVAT } from '@/constants'
+import { actualitzarPerfil, obtenirPerfil } from '@/api/usuari'
 import UserForm from '@/interfaces/UserForm'
 
 import * as yup from 'yup'
@@ -33,20 +34,16 @@ watchEffect(() => {
   console.log('watchingEffect form: ' + form.nom)
 })
 
-const actualitzaPerfil = () => {
-  alert(JSON.stringify(form))
-  fetch('/api/actualitza-perfil', {
-    method: 'post',
-    body: JSON.stringify(form)
-  })
-}
-
-onMounted(() => {
+onMounted(async () => {
   // setInterval(actualitzaPerfil, 30 * 1000)
+
+  const usuari = await obtenirPerfil()
+
+  form.nom = usuari.name
 })
 </script>
 <template>
-  <Form @submit="actualitzaPerfil" :validation-schema="schema" class="card">
+  <Form @submit="actualitzarPerfil(form)" :validation-schema="schema" class="card">
     <div class="card-header">
       <h5>Hola, {{ form.nom }}</h5>
     </div>
