@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { useFormulari } from '@/hooks/useFormulari'
+import { useMouse } from '@/hooks/useMouse'
 import { useForm } from 'vee-validate'
 import { ref, computed, watch, type Ref } from 'vue'
 import * as yup from 'yup'
 
+const formElement = ref()
+
 const { enviant, textBoto, classBoto, enviar } = useFormulari()
+const { eixX, eixY } = useMouse(formElement)
 
 const enviarDades = () => {
   enviar('/api/perfil', {
@@ -49,9 +53,9 @@ const [email] = defineField('email')
 const [telefon] = defineField('telefon')
 </script>
 <template>
-  <form @submit.prevent="enviarDades" class="card">
+  <form ref="formElement" @submit.prevent="enviarDades" class="card">
     <div class="card-header">
-      <h5>Formulari bàsic - {{ nomDeUsuari }}</h5>
+      <h5>Formulari bàsic - {{ nomDeUsuari }} - {{ eixX }} {{ eixY }}</h5>
     </div>
     <div class="card-body d-flex flex-column gap-4" :class="classesAddicionals">
       <div>

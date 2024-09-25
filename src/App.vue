@@ -52,7 +52,7 @@ const desitjosDeLaPlatja: Ref<Desig[]> = computed(() =>
 
 const container = ref()
 
-const { eixX, eixY } = useMouse()
+const { eixX, eixY } = useMouse(container)
 
 onMounted(() => {
   // S'ha de fer dins onMounted!

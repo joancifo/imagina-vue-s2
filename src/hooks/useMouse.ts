@@ -1,6 +1,6 @@
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, type Ref } from 'vue'
 
-export function useMouse() {
+export function useMouse(target: Ref) {
   const eixX = ref(100)
   const eixY = ref(100)
 
@@ -14,11 +14,11 @@ export function useMouse() {
   }
 
   onMounted(() => {
-    window.addEventListener('mousemove', actualitzarValor)
+    target.value.addEventListener('mousemove', actualitzarValor)
   })
 
   onUnmounted(() => {
-    window.removeEventListener('mousemove', actualitzarValor)
+    target.value.removeEventListener('mousemove', actualitzarValor)
   })
 
   return {
