@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { useForm } from 'vee-validate'
 import { ref, computed, watch, type Ref } from 'vue'
+import * as yup from 'yup'
 
 const nomDeUsuari = ref<string>('Joan ref')
 const nivellEstudis = ref<number>()
@@ -36,6 +38,15 @@ const enviarDades = () => {
     })
   })
 }
+
+const { values, defineField, handleSubmit, errors, meta } = useForm({
+  validationSchema: yup.object({
+    email: yup.string().email()
+  })
+})
+
+const [email] = defineField('email')
+const [telefon] = defineField('telefon')
 </script>
 <template>
   <form @submit.prevent="enviarDades" class="card">
@@ -49,7 +60,6 @@ const enviarDades = () => {
           <input v-model="nomDeUsuari" name="nomDeUsuari" required class="form-control" />
         </label>
       </div>
-
       <div>
         <label>
           Nivell d'estudis
@@ -58,6 +68,37 @@ const enviarDades = () => {
             <option value="2">Universitaris</option>
           </select>
         </label>
+      </div>
+      <div class="alert alert-secondary d-flex flex-column gap-2">
+        <h6>Vee Validate test</h6>
+
+        <div>
+          <label>
+            Correu electrònic:
+            <input type="email" name="email" v-model="email" class="form-control" />
+          </label>
+        </div>
+
+        <div>
+          <label>
+            Telèfon:
+            <input type="tel" name="telefon" v-model="telefon" class="form-control" />
+          </label>
+        </div>
+
+        <div class="bg-success text-white rounded p-3">
+          {{ values }}
+        </div>
+
+        <div class="bg-danger text-white rounded p-3">
+          {{ errors }}
+        </div>
+
+        <div class="bg-info text-white rounded p-3">
+          {{ meta }}
+        </div>
+
+        <button class="btn btn-secondary" :disabled="!meta.valid">Enviar</button>
       </div>
     </div>
     <div class="card-body">
