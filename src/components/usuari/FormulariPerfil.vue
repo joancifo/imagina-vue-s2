@@ -8,8 +8,8 @@ import UserForm from '@/interfaces/UserForm'
 import * as yup from 'yup'
 
 const form: UserForm = reactive<UserForm>({
-  nom: 'Joan',
-  edat: 10,
+  nom: '',
+  edat: undefined,
   sobretu: '',
   acceptarCondicions: false,
   estat: ESTAT_ACTIU,
@@ -19,11 +19,7 @@ const form: UserForm = reactive<UserForm>({
 const schema = yup.object({
   nom: yup.string().required('El nom és obligatori').min(3).max(10),
   acceptarCondicions: yup.bool().required().isTrue("Has d'acceptar les condicions"),
-  estat: yup
-    .number()
-    .required()
-    .min(ESTAT_ACTIU, "Has d'estar actiu")
-    .max(ESTAT_ACTIU, "Has d'estar actiu"),
+  estat: yup.number().required().oneOf([ESTAT_ACTIU]),
   estudis: yup.number().required().positive("Tria el teu nivell d'estudis"),
   sobretu: yup.string()
 })
@@ -58,7 +54,7 @@ onMounted(() => {
     <div class="card-body">
       <div>
         <label>
-          Reactive:
+          Nom:
           <Field v-model="form.nom" name="nom" class="form-control" />
           <ErrorMessage name="nom" />
         </label>
