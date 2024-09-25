@@ -19,9 +19,18 @@ watch<string>(nomDeUsuari, (valorActual: string, valorAnterior: string) => {
 const etsEnJoan: Ref<boolean> = computed(() => nomDeUsuari.value === 'Joan')
 const etsEnMiquel: Ref<boolean> = computed(() => nomDeUsuari.value === 'Miquel')
 
+const enviarDades = () => {
+    fetch('/api/perfil', {
+        method: 'POST',
+        body: JSON.stringify({
+            nomDeUsuari: nomDeUsuari.value,
+            nivellEstudis: nivellEstudis.value
+        })
+    })
+}
 </script>
 <template>
-    <div class="card">
+    <form @submit.prevent="enviarDades" class="card">
         <div class="card-header">
             <h5>Formulari bàsic - {{ nomDeUsuari }}</h5>
         </div>
@@ -50,5 +59,9 @@ const etsEnMiquel: Ref<boolean> = computed(() => nomDeUsuari.value === 'Miquel')
             <div v-else>No ets en Joan ni en Miquel.</div>
             <div v-show="etsEnJoan">Ah, ets en Joan però jo ja ho sabia.</div>
         </div>
-    </div>
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+    </form>
 </template>
