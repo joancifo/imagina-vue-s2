@@ -6,6 +6,7 @@ import LlistaAtributs from '@/components/usuari/LlistaAtributs.vue'
 import { computed, onMounted, ref, type Ref } from 'vue'
 import { ESTAT_ACTIU, ESTAT_DESACTIVAT, ESTAT_ESTRELLA } from './constants'
 import type Desig from './interfaces/Desig'
+import { useMouse } from './hooks/useMouse'
 
 // const llista: string[] = ['Anar a la platja', 'Anar a la muntanya']
 const llista: Ref<Desig[]> = ref([
@@ -51,6 +52,12 @@ const desitjosDeLaPlatja: Ref<Desig[]> = computed(() =>
 
 const container = ref()
 
+const mouse = useMouse()
+
+// mouse.mostrar()
+
+console.log(mouse.eixX.value, mouse.eixY.value)
+
 onMounted(() => {
   // S'ha de fer dins onMounted!
   console.log(container.value)
@@ -89,7 +96,6 @@ const afegirDesig = (nom: string) => {
   <div ref="container" class="container">
     <div class="row">
       <div class="col-12 d-flex flex-column gap-4">
-
         <FormulariBasic />
 
         <FormulariPerfil />
