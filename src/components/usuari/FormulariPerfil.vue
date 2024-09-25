@@ -1,30 +1,32 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch, watchEffect, type Ref } from 'vue'
-
-import UserForm from '@/interfaces/UserForm'
-import { ESTAT_ACTIU, ESTAT_DESACTIVAT } from '@/constants'
+import { onMounted, reactive, watch, watchEffect } from 'vue'
 import { ErrorMessage, Field, Form } from 'vee-validate'
+
+import { ESTAT_ACTIU, ESTAT_DESACTIVAT } from '@/constants'
+import UserForm from '@/interfaces/UserForm'
+
 import * as yup from 'yup'
 
-
-
 const form: UserForm = reactive<UserForm>({
-  nom: 'Joan reactive',
+  nom: 'Joan',
   edat: 10,
-  sobretu: 'hola\nholahola',
+  sobretu: '',
   acceptarCondicions: false,
   estat: ESTAT_ACTIU,
   estudis: undefined
 })
 
-// const schema = yup.object({
-//   nomDeUsuari: yup.string().required().min(3).max(10),
-//   acceptarCondicions: yup.bool().required().isTrue("Has d'acceptar les condicions")
-// })
-
-
-
-
+const schema = yup.object({
+  nom: yup.string().required('El nom és obligatori').min(3).max(10),
+  acceptarCondicions: yup.bool().required().isTrue("Has d'acceptar les condicions"),
+  estat: yup
+    .number()
+    .required()
+    .min(ESTAT_ACTIU, "Has d'estar actiu")
+    .max(ESTAT_ACTIU, "Has d'estar actiu"),
+  estudis: yup.number().required().positive("Tria el teu nivell d'estudis"),
+  sobretu: yup.string()
+})
 
 watch<UserForm>(form, (valorActual: UserForm, valorAnterior: UserForm) => {
   console.log('watching form')
@@ -35,18 +37,16 @@ watchEffect(() => {
   console.log('watchingEffect form: ' + form.nom)
 })
 
-
 const actualitzaPerfil = () => {
+  alert(JSON.stringify(form))
   fetch('/api/actualitza-perfil', {
     method: 'post',
     body: JSON.stringify(form)
   })
 }
 
-
-
 onMounted(() => {
-  setInterval(actualitzaPerfil, 30 * 1000)
+  // setInterval(actualitzaPerfil, 30 * 1000)
 })
 </script>
 <template>
@@ -56,18 +56,23 @@ onMounted(() => {
     </div>
 
     <div class="card-body">
-
       <div>
         <label>
           Reactive:
-          <input type="text" v-model="form.nom" class="form-control" />
+          <Field v-model="form.nom" name="nom" class="form-control" />
+          <ErrorMessage name="nom" />
         </label>
       </div>
       <div class="d-flex flex-column gap-4 mt-4">
         <div>
           <label>
-            <Field name="acceptarCondicions" type="checkbox" v-model="form.acceptarCondicions" :value="true"
-              :unchecked-value="false" />
+            <Field
+              name="acceptarCondicions"
+              type="checkbox"
+              v-model="form.acceptarCondicions"
+              :value="true"
+              :unchecked-value="false"
+            />
             Accept les condicions
           </label>
           <div>
@@ -75,21 +80,34 @@ onMounted(() => {
           </div>
         </div>
         <div class="d-flex gap-4">
-          <label><input type="radio" v-model="form.estat" :value="ESTAT_ACTIU" />Actiu</label>
           <label>
-            <input type="radio" v-model="form.estat" :value="ESTAT_DESACTIVAT" />Desactivat
+            <Field name="estat" type="radio" v-model="form.estat" :value="ESTAT_ACTIU" />
+            Actiu
           </label>
+          <label>
+            <Field
+              name="estat"
+              type="radio"
+              v-model="form.estat"
+              :value="ESTAT_DESACTIVAT"
+            />Desactivat
+          </label>
+          <div>
+            <ErrorMessage name="estat" />
+          </div>
         </div>
         <div>
           <label>Estudis</label>
-          <select v-model.number="form.estudis" class="form-control">
+          <Field as="select" name="estudis" v-model.number="form.estudis" class="form-control">
+            <option value="0">--</option>
             <option value="1">Superiors</option>
             <option value="2">Bàsics</option>
-          </select>
+          </Field>
+          <ErrorMessage name="estudis" />
         </div>
-        <textarea v-model="form.sobretu" class="form-control"></textarea>
+        <Field as="textarea" name="sobretu" v-model="form.sobretu" class="form-control" />
+        <ErrorMessage name="sobretu" />
       </div>
-
     </div>
 
     <div class="card-body">
